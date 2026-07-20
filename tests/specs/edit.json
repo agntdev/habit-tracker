@@ -1,19 +1,53 @@
 [
   {
-    "name": "/edit",
+    "name": "/edit shows empty state",
     "steps": [
       {
+        "send": { "text": "/edit" },
         "expect": [
-          {
-            "method": "sendMessage",
-            "payload": {
-              "text": "Edit an existing habit's settings"
-            }
-          }
-        ],
-        "send": {
-          "text": "/edit"
-        }
+          { "method": "sendMessage", "payload": { "text": "No habits to edit. Create one first!" } }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "/edit shows habit list after creation",
+    "steps": [
+      {
+        "send": { "text": "/add" },
+        "expect": [
+          { "method": "sendMessage", "payload": { "text": "What habit would you like to build?" } }
+        ]
+      },
+      {
+        "send": { "text": "Yoga" },
+        "expect": [
+          { "method": "sendMessage" }
+        ]
+      },
+      {
+        "send": { "callback": "add:freq:daily" },
+        "expect": [
+          { "method": "editMessageText" }
+        ]
+      },
+      {
+        "send": { "text": "08:00" },
+        "expect": [
+          { "method": "sendMessage" }
+        ]
+      },
+      {
+        "send": { "callback": "add:confirm:yes" },
+        "expect": [
+          { "method": "editMessageText" }
+        ]
+      },
+      {
+        "send": { "text": "/edit" },
+        "expect": [
+          { "method": "sendMessage", "payload": { "text": "Which habit do you want to edit?" } }
+        ]
       }
     ]
   }

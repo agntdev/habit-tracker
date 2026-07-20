@@ -1,19 +1,70 @@
 [
   {
-    "name": "/done",
+    "name": "/done shows check-in list when empty",
     "steps": [
       {
+        "send": { "text": "/done" },
         "expect": [
-          {
-            "method": "sendMessage",
-            "payload": {
-              "text": "Mark today's habit check-in as done"
-            }
-          }
-        ],
-        "send": {
-          "text": "/done"
-        }
+          { "method": "sendMessage", "payload": { "text": "No active habits to check in. Create one first!" } }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Check in a habit after creating it",
+    "steps": [
+      {
+        "send": { "text": "/add" },
+        "expect": [
+          { "method": "sendMessage", "payload": { "text": "What habit would you like to build?" } }
+        ]
+      },
+      {
+        "send": { "text": "Read" },
+        "expect": [
+          { "method": "sendMessage" }
+        ]
+      },
+      {
+        "send": { "callback": "add:freq:daily" },
+        "expect": [
+          { "method": "editMessageText" }
+        ]
+      },
+      {
+        "send": { "text": "21:00" },
+        "expect": [
+          { "method": "sendMessage" }
+        ]
+      },
+      {
+        "send": { "callback": "add:confirm:yes" },
+        "expect": [
+          { "method": "editMessageText" }
+        ]
+      },
+      {
+        "send": { "text": "/done" },
+        "expect": [
+          { "method": "sendMessage", "payload": { "text": "Tap a habit to check in:" } }
+        ]
+      },
+      {
+        "send": { "callback": "habit:checkin:h_1_" },
+        "expect": [
+          { "method": "sendMessage" }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Check in button on main menu shows habit list",
+    "steps": [
+      {
+        "send": { "callback": "habit:checkin" },
+        "expect": [
+          { "method": "sendMessage", "payload": { "text": "No active habits to check in. Create one first!" } }
+        ]
       }
     ]
   }

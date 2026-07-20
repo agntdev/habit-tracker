@@ -1,19 +1,53 @@
 [
   {
-    "name": "/recap",
+    "name": "/recap shows empty state",
     "steps": [
       {
+        "send": { "text": "/recap" },
         "expect": [
-          {
-            "method": "sendMessage",
-            "payload": {
-              "text": "View weekly summary of completed/skipped/missed days"
-            }
-          }
-        ],
-        "send": {
-          "text": "/recap"
-        }
+          { "method": "sendMessage", "payload": { "text": "No habits yet — tap ➕ Add habit to get started." } }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "/recap shows weekly summary after creating a habit",
+    "steps": [
+      {
+        "send": { "text": "/add" },
+        "expect": [
+          { "method": "sendMessage", "payload": { "text": "What habit would you like to build?" } }
+        ]
+      },
+      {
+        "send": { "text": "Stretch" },
+        "expect": [
+          { "method": "sendMessage" }
+        ]
+      },
+      {
+        "send": { "callback": "add:freq:daily" },
+        "expect": [
+          { "method": "editMessageText" }
+        ]
+      },
+      {
+        "send": { "text": "07:30" },
+        "expect": [
+          { "method": "sendMessage" }
+        ]
+      },
+      {
+        "send": { "callback": "add:confirm:yes" },
+        "expect": [
+          { "method": "editMessageText" }
+        ]
+      },
+      {
+        "send": { "text": "/recap" },
+        "expect": [
+          { "method": "sendMessage" }
+        ]
       }
     ]
   }

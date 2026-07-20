@@ -1,19 +1,17 @@
 [
   {
-    "name": "Check in",
+    "name": "Check in shows habit list",
     "steps": [
       {
+        "send": { "callback": "habit:checkin" },
         "expect": [
           {
             "method": "sendMessage",
             "payload": {
-              "text": "Mark today's habit check-in"
+              "text": "No active habits to check in. Create one first!"
             }
           }
-        ],
-        "send": {
-          "callback": "habit:checkin"
-        }
+        ]
       }
     ]
   }

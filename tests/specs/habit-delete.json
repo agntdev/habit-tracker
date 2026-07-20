@@ -1,19 +1,17 @@
 [
   {
-    "name": "Delete",
+    "name": "Delete shows habit list",
     "steps": [
       {
+        "send": { "callback": "habit:delete" },
         "expect": [
           {
             "method": "sendMessage",
             "payload": {
-              "text": "Delete the habit"
+              "text": "No habits to delete."
             }
           }
-        ],
-        "send": {
-          "callback": "habit:delete"
-        }
+        ]
       }
     ]
   }
