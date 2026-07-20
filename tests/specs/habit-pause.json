@@ -1,19 +1,17 @@
 [
   {
-    "name": "Pause",
+    "name": "Pause shows habit list",
     "steps": [
       {
+        "send": { "callback": "habit:pause" },
         "expect": [
           {
             "method": "sendMessage",
             "payload": {
-              "text": "Pause the habit"
+              "text": "No active habits to pause."
             }
           }
-        ],
-        "send": {
-          "callback": "habit:pause"
-        }
+        ]
       }
     ]
   }

@@ -1,19 +1,53 @@
 [
   {
-    "name": "/stats",
+    "name": "/stats shows empty state",
     "steps": [
       {
+        "send": { "text": "/stats" },
         "expect": [
-          {
-            "method": "sendMessage",
-            "payload": {
-              "text": "View completion rate and streak history"
-            }
-          }
-        ],
-        "send": {
-          "text": "/stats"
-        }
+          { "method": "sendMessage", "payload": { "text": "No habits yet — tap ➕ Add habit to get started." } }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "/stats shows stats after creating a habit",
+    "steps": [
+      {
+        "send": { "text": "/add" },
+        "expect": [
+          { "method": "sendMessage", "payload": { "text": "What habit would you like to build?" } }
+        ]
+      },
+      {
+        "send": { "text": "Run" },
+        "expect": [
+          { "method": "sendMessage" }
+        ]
+      },
+      {
+        "send": { "callback": "add:freq:daily" },
+        "expect": [
+          { "method": "editMessageText" }
+        ]
+      },
+      {
+        "send": { "text": "06:00" },
+        "expect": [
+          { "method": "sendMessage" }
+        ]
+      },
+      {
+        "send": { "callback": "add:confirm:yes" },
+        "expect": [
+          { "method": "editMessageText" }
+        ]
+      },
+      {
+        "send": { "text": "/stats" },
+        "expect": [
+          { "method": "sendMessage" }
+        ]
       }
     ]
   }

@@ -1,19 +1,87 @@
 [
   {
-    "name": "/add",
+    "name": "/add starts the habit creation flow",
     "steps": [
       {
+        "send": { "text": "/add" },
         "expect": [
           {
             "method": "sendMessage",
             "payload": {
-              "text": "Create a new habit with frequency/time settings"
+              "text": "What habit would you like to build?"
             }
           }
-        ],
-        "send": {
-          "text": "/add"
-        }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Create a daily habit through the full flow",
+    "steps": [
+      {
+        "send": { "text": "/add" },
+        "expect": [
+          { "method": "sendMessage", "payload": { "text": "What habit would you like to build?" } }
+        ]
+      },
+      {
+        "send": { "text": "Exercise" },
+        "expect": [
+          { "method": "sendMessage", "payload": { "text": "Great! How often do you want to do \"Exercise\"?" } }
+        ]
+      },
+      {
+        "send": { "callback": "add:freq:daily" },
+        "expect": [
+          { "method": "editMessageText", "payload": { "text": "When do you want to do this habit? (HH:MM, e.g. 09:00)" } }
+        ]
+      },
+      {
+        "send": { "text": "09:00" },
+        "expect": [
+          { "method": "sendMessage", "payload": { "text": "Create \"Exercise\"?\nFrequency: Daily\nTime: 9:00 AM" } }
+        ]
+      },
+      {
+        "send": { "callback": "add:confirm:yes" },
+        "expect": [
+          { "method": "editMessageText" }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Cancel habit creation",
+    "steps": [
+      {
+        "send": { "text": "/add" },
+        "expect": [
+          { "method": "sendMessage", "payload": { "text": "What habit would you like to build?" } }
+        ]
+      },
+      {
+        "send": { "text": "Meditate" },
+        "expect": [
+          { "method": "sendMessage" }
+        ]
+      },
+      {
+        "send": { "callback": "add:freq:daily" },
+        "expect": [
+          { "method": "editMessageText" }
+        ]
+      },
+      {
+        "send": { "text": "07:00" },
+        "expect": [
+          { "method": "sendMessage" }
+        ]
+      },
+      {
+        "send": { "callback": "add:confirm:no" },
+        "expect": [
+          { "method": "editMessageText", "payload": { "text": "Cancelled. Tap /start to begin again." } }
+        ]
       }
     ]
   }

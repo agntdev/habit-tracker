@@ -1,19 +1,53 @@
 [
   {
-    "name": "/habits",
+    "name": "/habits shows empty state",
     "steps": [
       {
+        "send": { "text": "/habits" },
         "expect": [
-          {
-            "method": "sendMessage",
-            "payload": {
-              "text": "List all habits with current streaks"
-            }
-          }
-        ],
-        "send": {
-          "text": "/habits"
-        }
+          { "method": "sendMessage", "payload": { "text": "No habits yet — tap ➕ Add habit to create one." } }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "/habits shows created habits",
+    "steps": [
+      {
+        "send": { "text": "/add" },
+        "expect": [
+          { "method": "sendMessage", "payload": { "text": "What habit would you like to build?" } }
+        ]
+      },
+      {
+        "send": { "text": "Meditate" },
+        "expect": [
+          { "method": "sendMessage" }
+        ]
+      },
+      {
+        "send": { "callback": "add:freq:daily" },
+        "expect": [
+          { "method": "editMessageText" }
+        ]
+      },
+      {
+        "send": { "text": "07:00" },
+        "expect": [
+          { "method": "sendMessage" }
+        ]
+      },
+      {
+        "send": { "callback": "add:confirm:yes" },
+        "expect": [
+          { "method": "editMessageText" }
+        ]
+      },
+      {
+        "send": { "text": "/habits" },
+        "expect": [
+          { "method": "sendMessage", "payload": { "text": "📋 Your habits:\n\n• Meditate — 🔥 0" } }
+        ]
       }
     ]
   }
