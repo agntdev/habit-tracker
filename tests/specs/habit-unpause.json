@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Unpause",
+    "steps": [
+      {
+        "expect": [
+          {
+            "method": "sendMessage",
+            "payload": {
+              "text": "Unpause the habit"
+            }
+          }
+        ],
+        "send": {
+          "callback": "habit:unpause"
+        }
+      }
+    ]
+  }
+]
